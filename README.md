@@ -1,6 +1,9 @@
 # Coveo Backend Coding Challenge
 (inspired by https://github.com/busbud/coding-challenge-backend-c)
 
+## Deployed with Heroku
+https://coveo-backend-charles-marois.herokuapp.com/suggestions
+
 ## Requirements
 
 Design a REST API endpoint that provides auto-complete suggestions for large cities.
