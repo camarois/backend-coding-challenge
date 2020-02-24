@@ -1,6 +1,7 @@
-import os
 from dataclasses import dataclass
-from src.cities.levenshtein import calculate_distance_score
+
+from src.cities.haversine import calculate_haversine_score
+from src.cities.levenshtein import calculate_levenshtein_score
 from src.cities.trie import GeoCityInterface, SuffixTree
 
 
@@ -9,9 +10,16 @@ class CityQuery:
     query: str
     latitude: float
     longitude: float
+    suffix_tree: SuffixTree
 
-    ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
-    DATA_FILEPATH = os.path.join(ROOT_DIR, "../../data/cities_canada-usa.tsv")
+    ROUNDING = 2
+
+    def _calculate_score(self, city: GeoCityInterface):
+        if self.longitude and self.latitude:
+            return calculate_levenshtein_score(self.query, city) - \
+                   calculate_haversine_score(self.longitude, self.latitude, float(city.longitude), float(city.latitude))
+        else:
+            return calculate_levenshtein_score(self.query, city)
 
     def _convert_to_list(self, city: str, cities):
         geo_cities = cities.get(city)
@@ -19,16 +27,18 @@ class CityQuery:
             id=geo_city["id"],
             name=geo_city["name"],
             alt_names=geo_city["alt_name"].split(',') if geo_city["alt_name"] else [],
-            longitude=float(geo_city["long"]),
-            latitude=float(geo_city["lat"]),
+            country=geo_city["admin1"] +
+                    ", " + geo_city["country"] if geo_city["country"] == "US" else geo_city["country"],
+            longitude=geo_city["long"],
+            latitude=geo_city["lat"]
         ) for geo_city in geo_cities]
 
     def _convert_to_json(self, city: GeoCityInterface):
         return {
-            "name": city.name,
-            "longitude": city.longitude,
+            "name": city.name + ", " + city.country,
             "latitude": city.latitude,
-            "score": calculate_distance_score(self.query, city)
+            "longitude": city.longitude,
+            "score": round(self._calculate_score(city), self.ROUNDING)
         }
 
     @staticmethod
@@ -36,9 +46,7 @@ class CityQuery:
         return sorted(cities, key=lambda x: x['score'], reverse=True)
 
     def get(self):
-        suffix_tree = SuffixTree(self.DATA_FILEPATH)
-
-        cities, selected_cities = suffix_tree.search(self.query)
+        cities, selected_cities = self.suffix_tree.search(self.query)
         geo_cities = [self._convert_to_list(city, cities) for city in selected_cities]
         geo_cities = [item for sublist in geo_cities for item in sublist]
         return {
