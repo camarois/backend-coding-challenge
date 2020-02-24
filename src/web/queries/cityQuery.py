@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
-from src.cities.haversine import calculate_haversine_score
-from src.cities.levenshtein import calculate_levenshtein_score
+from src.cities.algorithms.haversine import calculate_haversine_score
+from src.cities.algorithms.levenshtein import calculate_levenshtein_score
 from src.cities.trie import GeoCityInterface, SuffixTree
 
 

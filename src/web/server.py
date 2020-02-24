@@ -3,7 +3,7 @@ from http import HTTPStatus
 
 from src.cities.trie import SuffixTree
 from src.cities.utils import normalize_input
-from src.web.cityQuery import CityQuery
+from src.web.queries.cityQuery import CityQuery
 import os
 
 Q_PARAMETER = "q"
