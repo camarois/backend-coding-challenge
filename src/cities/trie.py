@@ -1,6 +1,6 @@
 from typing import List
-from unicodedata import normalize
 from dataclasses import dataclass
+from src.cities.utils import clean_input_line, normalize_input
 
 
 @dataclass
@@ -21,12 +21,16 @@ class WordNode:
 
 
 class Trie:
-    def __init__(self, raw_inputs):
+    def __init__(self, file_path: str):
         """
         Initialize your data structure here.
         """
         self.root = WordNode("")
         self.cities = []
+
+        with open(file_path, 'r', encoding='utf8') as file:
+            column_names = clean_input_line(next(file))
+            raw_inputs = [dict(zip(column_names, clean_input_line(line))) for line in file]
 
         for city in raw_inputs:
             self.insert(city["name"], city)
@@ -36,7 +40,7 @@ class Trie:
         Inserts a word into the trie.
         """
         curr = self.root
-        for letter in normalize("NFD", word).lower():
+        for letter in normalize_input(word):
             if letter not in curr.children:
                 curr.children[letter] = WordNode(letter)
 
@@ -46,9 +50,9 @@ class Trie:
         curr.data = GeoCityInterface(
             id=city["id"],
             name=city["name"],
-            alt_names=city["alt_name"],
-            longitude=city["long"],
-            latitude=city["lat"]
+            alt_names=city["alt_name"].split(',') if city['alt_name'] else [],
+            longitude=float(city["long"]),
+            latitude=float(city["lat"])
         )
 
     def suggestionsRec(self, node, word):
@@ -66,7 +70,7 @@ class Trie:
         not_found = False
         temp_word = ''
 
-        for a in list(normalize("NFD", key).lower()):
+        for a in list(normalize_input(key)):
             if not node.children.get(a):
                 not_found = True
                 break

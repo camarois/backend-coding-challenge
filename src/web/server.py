@@ -1,6 +1,6 @@
 from flask import Flask, request, Response, json
 from http import HTTPStatus
-from src.flask.cityQuery import CityQuery
+from src.web.cityQuery import CityQuery
 
 Q_PARAMETER = "q"
 LATITUDE_PARAMETER = "latitude"
