@@ -1,12 +1,9 @@
 import src.web.server as server
 
-
-def app():
-    return server.create_app()
-
+flask_app = server.create_app()
 
 def main():
-    app().run()
+    flask_app.run()
 
 
 if __name__ == '__main__':

@@ -1,7 +1,6 @@
 import os
 from src.cities.trie import SuffixTree
-from src.run import app
-from src.web.queries.cityQuery import CityQuery
+from run import app
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_FILEPATH = os.path.join(ROOT_DIR, "../data/cities_canada-usa.tsv")
