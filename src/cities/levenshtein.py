@@ -10,4 +10,4 @@ def _ratio(word1: str, word2: str):
 
 def calculate_distance_score(q: str, city: GeoCityInterface):
     names = [city.name] + city.alt_names
-    return max(_ratio(name, normalize_input(q)) for name in names)
+    return max(_ratio(name, q) for name in names)
