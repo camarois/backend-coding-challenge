@@ -15,7 +15,7 @@ DATA_FILEPATH = os.path.join(ROOT_DIR, "../../data/cities_canada-usa.tsv")
 
 def create_app():
     app = Flask(__name__)
-    app.debug = True
+
     #maybe put elsewhere
     suffix_tree = SuffixTree(DATA_FILEPATH)
     @app.route("/suggestions", methods=["GET"])
