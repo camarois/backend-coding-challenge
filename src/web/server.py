@@ -9,7 +9,7 @@ LONGITUDE_PARAMETER = "longitude"
 
 def create_app():
     app = Flask(__name__)
-    app.debug = True
+    #app.debug = True
     @app.route("/suggestions", methods=["GET"])
     def suggestions():
         q = request.args.get(Q_PARAMETER)
