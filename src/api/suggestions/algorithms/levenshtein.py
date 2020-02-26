@@ -1,7 +1,7 @@
 from Levenshtein import ratio
 
-from src.api.suggestions.cityInterface import CityInterface
-from src.utils.stringFormat import normalize_input
+from src.api.suggestions.city_interface import CityInterface
+from src.utils.string_format import normalize_input
 
 
 def _ratio(word1: str, word2: str):

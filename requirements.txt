@@ -1,6 +1,5 @@
 coverage==5.0.3
 csuffixtree==0.3.6
-dataclasses==0.7
 Flask==1.1.1
 gunicorn==20.0.4
 pylint==2.4.4

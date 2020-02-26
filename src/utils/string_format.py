@@ -7,4 +7,3 @@ def normalize_input(word: str):
 
 def clean_input_line(line: str):
     return line.rstrip("\n").split("\t")
-

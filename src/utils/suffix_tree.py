@@ -1,6 +1,6 @@
-import suffixtree as st
 from collections import defaultdict
-from src.utils.stringFormat import clean_input_line, normalize_input
+import suffixtree as st
+from src.utils.string_format import clean_input_line, normalize_input
 
 
 class SuffixTree:
@@ -21,4 +21,5 @@ class SuffixTree:
         self.tree.cacheNodes()
 
     def search(self, key):
-        return self.children, set(self.tree.findString(key))
+        selected_cities = set(self.tree.findString(key)) if len(key) > 0 else []
+        return self.children, selected_cities
