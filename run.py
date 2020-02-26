@@ -1,4 +1,4 @@
-import src.web.server as server
+import src.api.server as server
 
 flask_app = server.create_app()
 
