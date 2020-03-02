@@ -4,6 +4,9 @@
 ## Deployed with Heroku
 https://coveo-backend-charles-marois.herokuapp.com/suggestions
 
+## TravisCI
+https://travis-ci.com/camarois/backend-coding-challenge
+
 ## Requirements
 
 Design a REST API endpoint that provides auto-complete suggestions for large cities.
