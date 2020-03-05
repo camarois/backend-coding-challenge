@@ -7,7 +7,9 @@ from unicodedata import normalize
 
 def normalize_input(word: str):
     """Normalize according to NFD and lower string parameter"""
-    return normalize("NFD", word).lower()
+    text = normalize("NFD", word).lower()
+    text = text.encode('ascii', 'ignore')
+    return str(text.decode("utf-8"))
 
 
 def clean_input_line(line: str):

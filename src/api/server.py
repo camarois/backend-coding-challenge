@@ -40,9 +40,11 @@ def create_app():
 
         response = Response(
             json.dumps(JSONSerializer.serialize(city_query.get(normalize_input(q), latitude, longitude)),
+                       ensure_ascii=False,
                        sort_keys=False,
                        indent=2),
-            mimetype='application/json'
+            mimetype='application/json',
+            content_type="application/json; charset=utf-8"
         )
         response.status_code = HTTPStatus.OK
         return response
